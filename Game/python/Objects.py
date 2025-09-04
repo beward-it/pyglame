@@ -39,7 +39,7 @@ class Zombi:
         self.h=h
         self.col=col
         self.xp=xp
-        self.batch=pyglet.graphics.Batch()
+        self.batch=bat
         self.speed=speed
         self.spawnSpeed=spawnSpeed
         self.damage=damage
@@ -47,18 +47,19 @@ class Zombi:
         self.attackSpeed=attackSpeed
     def spawn(self,dt=2,isSpawn=True):
         if isSpawn:
+            global bat
             #зомби спавнятся на краю карты значит одна из координат должна быть равна нулю или 720
             coord=r(0,720)
             coord1=random.choice((0,720))
             global zombies
             if not r(0,1):
                 #print(1,coord,coord1)
-                zombies[sh.Rectangle(coord,coord1,self.w,self.h,self.col,self.batch)] = 100
+                zombies[sh.Rectangle(coord,coord1,self.w,self.h,self.col,bat)] = 100
                 print(coord,coord1,self.col)
             else:
                 #print(2,coord1,coord)
                 #зомбей справа  и сверху видно не было поэтому я думал что спaвн почему то не работает
-                zombies[sh.Rectangle(coord1,coord,self.w,self.h,self.col,self.batch)] = 100
+                zombies[sh.Rectangle(coord1,coord,self.w,self.h,self.col,bat)] = 100
                 print(coord1,coord,self.col)
             #значение в хэш таблице это хр зомби
     def moving(self,dt=1/60):
