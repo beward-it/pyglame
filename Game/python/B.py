@@ -2,6 +2,7 @@ import pyglet
 from pyglet import shapes as sh
 from pyglet.window.key import *
 import random
+from objects import Ognestrel
 # доки пайглета https://pyglet.readthedocs.io/en/latest/programming_guide/shapes.html
 #это чтобы писать названия клавиш не указывая функцию key
 # wind is a window object
@@ -27,6 +28,7 @@ def on_mouse_press(x,y,button,modifiers):
     print(f"x = {x}, y = {y}")
 
 
+pist=Ognestrel(playr=playr)
 class OutOfXpError(Exception):
     pass
 
@@ -161,10 +163,12 @@ def pl_moving(x,y):
 
     if 0 < x + playr.x < 721 - w and avanpost:
         playr.x += x
+        pist.pist.x += x
 
     
     if 0 < y + playr.y < 721 - w and avanpost : # '''прочитай послание на 31 строке'''
         playr.y += y
+        pist.pist.y += y
 
 keys={'W': False, 'A': False, 'S': False, 'D': False}
 @wind.event
@@ -212,6 +216,7 @@ def on_draw():
     dom.draw()
     zombi.draw()
     text.draw()
+    pist.pist.draw()
 
 pyglet.clock.schedule_interval(spawn,spawnSpeed,isZombSpawn)
 pyglet.clock.schedule_interval(zombMoving,1/20)
