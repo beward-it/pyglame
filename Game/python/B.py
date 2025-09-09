@@ -27,7 +27,7 @@ xpB=pyglet.text.Label(str(xp),20,690,color=(255,0,0),batch=text)
 def on_mouse_press(x,y,button,modifiers):
     print(f"x = {x}, y = {y}")
 
-
+mugsbat=pyglet.graphics.Batch()
 pist=Ognestrel(playr=playr)
 class OutOfXpError(Exception):
     pass
@@ -170,7 +170,7 @@ def pl_moving(x,y):
         playr.y += y
         pist.pist.y += y
 
-keys={'W': False, 'A': False, 'S': False, 'D': False}
+keys={'W': False, 'A': False, 'S': False, 'D': False, 'Q': False}
 @wind.event
 def on_key_press(symbol, modifiers):
     if symbol == W:
@@ -181,6 +181,8 @@ def on_key_press(symbol, modifiers):
         keys['S'] = True
     elif symbol == D:
         keys['D'] = True
+    elif symbol == Q:
+        pist.shot()
 
 
 @wind.event
@@ -193,7 +195,8 @@ def on_key_release(symbol, modifiers):
         keys['S'] = False
     elif symbol == D:
         keys['D'] = False
-    
+    elif symbol == Q:
+        keys['Q'] == False    
 
 
 
@@ -206,6 +209,10 @@ def update(dt, speed=5):
         pl_moving(-speed, 0)
     if keys['D']:
         pl_moving(speed, 0)
+    if keys['Q']:
+        pist.shot()
+        #global mugsbat
+        #mugsbat.__new__(pist.shot())
 
 
 @wind.event
@@ -217,10 +224,13 @@ def on_draw():
     zombi.draw()
     text.draw()
     pist.pist.draw()
+    pist.bat.draw()
+    mugsbat.draw()
 
 pyglet.clock.schedule_interval(spawn,spawnSpeed,isZombSpawn)
 pyglet.clock.schedule_interval(zombMoving,1/20)
 #передвижения зомбей с обновлением каждые 1/4 секунды может уже не 1/4 
 pyglet.clock.schedule_interval(update,1/60)
 pyglet.clock.schedule_interval(zombAttack,1/2)
+pyglet.clock.schedule_interval(pist.pulaMoving,1/100)
 pyglet.app.run()
